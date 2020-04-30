@@ -1,0 +1,7 @@
+{
+    "require": {
+        "endroid/qr-code": "^3.7",
+        "ext-json": "*",
+        "ext-iconv": "*"
+    }
+}

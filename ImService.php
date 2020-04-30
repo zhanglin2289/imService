@@ -29,7 +29,7 @@ class ImService extends Common
 				$this->redis = new \Redis();
 				$this->redis->pconnect('127.0.0.1',6379);
 				$this->redis->auth('123456');
-				$this->redis->select(1);
+				$this->redis->select(2);
 				
 				$this->ws = new  \Swoole\WebSocket\Server($host,$port,$mode);
 				//设置参数
@@ -111,7 +111,7 @@ class ImService extends Common
                 $this->ws->push($frame->fd, $this->json(404,'对方账号不存在或已经注销'));
                 return false;
             }
-            //将数据写入到 redis 数据库(临时数据库存储)中 存储数据
+            //将数据写入到 redis 数据库(临时数据库存储)中 存储数据（ToDo:: 后期定时任务 将这张表的数据写入到数据库）
             $this->redis->hSet('im_user_message',$client_data->to,$frame->data);
         }
         if($client_data->type==1){//群聊信息
@@ -120,6 +120,15 @@ class ImService extends Common
                 $this->ws->push($frame->fd, $this->json(404,'对方账号不存在或已经注销'));
                 return false;
             }
+            $group_list = $this->redis->hGetAll('user_group_list');
+            //将数据推送给 任务进程处理  如果群里用户过多可以 将数据拆分开 分段推送
+//            if(count($group_list) > 50){
+//
+//            }
+            
+            $this->ws->task(['message'=>$client_data->message,'grou_list'=>$group_list]);
+            
+            
         }
         if($client_data->type==3){//发送广播
         
@@ -140,15 +149,22 @@ class ImService extends Common
 		 * @param $task_id
 		 * @param $from_id
 		 * @param $data
-		 * @return string
 		 * @author: zhanglin
 		 */
 		public function onTask($server, $task_id, $from_id, $data)
 		{
-				print_r($data);
-				sleep(10);
+				if(!empty($data)){//接收到 投递的任务
+				    foreach($data['grou_list'] as $k=>$v){
+				        //检测用户是否在线
+                $relat_user = $this->redis->hGet('relat_user',$v);
+                if($relat_user){
+                    //在线处理（用户离线不做处理）
+                    $server->push($relat_user,$this->json(200,'成功',$data['message']));
+                }
+            }
+        }
 				$this->ws->finish('ok');
-				return 'on task finish'; //调用finish 或者return告诉线程
+				//return 'on task finish'; //调用finish 或者return告诉线程
 		}
 
 		/**

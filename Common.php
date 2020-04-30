@@ -28,10 +28,6 @@ class Common
     
     /********************************************* 可继承的接口 ********************************************************/
     
-
-    
-    
-    
     /**
      * 检测json 是否正常
      * checkJson
@@ -203,7 +199,7 @@ class Common
      * @return bool
      * @author: zhanglin
      */
-    private function checkFile(string $filename)
+    protected function checkFile(string $filename)
     {
         //检查文件是是否是目录/且目录是否存在
         if(!is_dir($filename)){
