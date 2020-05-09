@@ -71,7 +71,7 @@ class ImService extends Common
 		}
 
 		/**
-		 * 监听服务端发送信息
+		 * 监听客户端发送信息
 		 * onMessage
 		 * @param $server
 		 * @param $frame
@@ -126,7 +126,7 @@ class ImService extends Common
 //
 //            }
             
-            $this->ws->task(['message'=>$client_data->message,'grou_list'=>$group_list]);
+            $this->ws->task(['message'=>$client_data->message,'group_list'=>$group_list]);
             
             
         }
@@ -154,7 +154,7 @@ class ImService extends Common
 		public function onTask($server, $task_id, $from_id, $data)
 		{
 				if(!empty($data)){//接收到 投递的任务
-				    foreach($data['grou_list'] as $k=>$v){
+				    foreach($data['group_list'] as $k=>$v){
 				        //检测用户是否在线
                 $relat_user = $this->redis->hGet('relat_user',$v);
                 if($relat_user){
@@ -232,12 +232,8 @@ class ImService extends Common
      */
     public function hashHas($key,$hashKey)
     {
-        $is_check = $this->redis->hGet($key,$hashKey);
-        if(empty($is_check)){
-            return false;
-        }else{
-            return true;
-        }
+        $is_check = $this->redis->hExists($key,$hashKey);
+        return $is_check;
     }
     
 }

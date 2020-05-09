@@ -100,6 +100,13 @@ class HelpCommon extends Common
             return str_replace('=', '', base64_encode($result));
         }
     }
+    
+    /**
+     * 包装临时数据
+     * tempData
+     * @param $fd
+     * @return string
+     */
     protected function tempData($fd)
     {
         $token =  md5('zhang'.date('Y-m-d H:i').'lin'.$this->tokenKey);

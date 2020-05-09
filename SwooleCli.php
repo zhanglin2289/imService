@@ -85,6 +85,14 @@ class SwooleCli extends HelpCommon
             $server->push($request->fd, $this->json(200,'服务端连接成功'));
         }
     }
+    
+    /**
+     * 监听客户端发送信息
+     * onMessage
+     * @param $server
+     * @param $frame
+     * @return bool
+     */
     public function onMessage($server,$frame)
     {
         //检测到前端发送过来的信息
