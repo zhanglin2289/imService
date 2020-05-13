@@ -224,6 +224,7 @@ class ImService extends Common
     }
     
     /**
+     *
      * 检测哈希的Key
      * hashHas
      * @param $key
