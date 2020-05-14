@@ -238,3 +238,4 @@ class ImService extends Common
     }
     
 }
+new ImService();
