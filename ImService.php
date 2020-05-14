@@ -31,7 +31,7 @@ class ImService extends Common
 				$this->redis->auth('123456');
 				$this->redis->select(2);
 				
-				$this->ws = new  \Swoole\WebSocket\Server($host,$port,$mode);
+				$this->ws = new  \Swoole\WebSocket\Server($host,$port);
 				//设置参数
 				$this->ws->set([
 						'daemonize'                => 0,//是否开启守护进程 0 不开启 1 开启
@@ -215,7 +215,7 @@ class ImService extends Common
         }
         $info = json_decode($server_token,false);
         $time = time() - $info->create_time;
-        if($time > $this->expire_time){//检测到客户端token 过期
+        if($time > $info->expire_time){//检测到客户端token 过期
             $this->redis->hDel('user_token',$client_token);//检测到过期删除这个token
             return false;
         }
