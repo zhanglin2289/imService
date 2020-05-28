@@ -44,8 +44,8 @@ class TcpTest extends Common
     public function onReceive($serv, $fd, $from_id, $data)
     {
         $task_id = $this->serv->task($data);
-        echo "Dispatch AsyncTask: id=$task_id\n";
-        $serv->send($fd, "服务端发送的数据: " . $data . "\n");
+        echo "推送一个任务进程: id=".$task_id.PHP_EOL;
+        $serv->send($fd, "服务端发送的数据: " . $data .PHP_EOL);
     }
     /**
      * 接收到推送的任务在任务进程中处理业务
@@ -59,9 +59,9 @@ class TcpTest extends Common
     public function onTask($server, $task_id, $from_id, $data)
     {
         //投递异步任务
-        echo "New AsyncTask[id=$task_id]".PHP_EOL;
+        echo "执行一个工作进程: [id=$task_id]".PHP_EOL;
         //返回任务执行的结果
-        $server->finish("$data -> OK");
+        $server->finish("客户端的数据：".$data."==> OK");
         //return 'on task finish'; //调用finish 或者return告诉线程
     }
     
@@ -76,7 +76,7 @@ class TcpTest extends Common
     public function onFinish($server, $task_id, $data)
     {
         echo 'finish-task-id-'.$task_id.PHP_EOL;
-        echo 'finish-success'.$data.PHP_EOL;
+        echo 'finish-success：'.$data.PHP_EOL;
     }
     public function onClose($serv, $fd)
     {
