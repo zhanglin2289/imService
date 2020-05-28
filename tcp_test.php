@@ -38,6 +38,7 @@ class TcpTest extends Common
     
     public function onConnect($serv, $fd)
     {
+        $this->write('客户端：'.$fd.'连接成功','info');
         echo "客户端连接成功" . PHP_EOL;
     }
     
@@ -77,6 +78,7 @@ class TcpTest extends Common
     {
         echo 'finish-task-id-'.$task_id.PHP_EOL;
         echo 'finish-success：'.$data.PHP_EOL;
+        $this->write($data,'info');
     }
     public function onClose($serv, $fd)
     {
