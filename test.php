@@ -45,6 +45,8 @@ class ServiceObj
 //    {
 //        echo "客户端主动断开连接".PHP_EOL;
 //    }
+        private $ws = null;
+        private $redis = null;
         public function __construct()
         {
             $this->redis = new \Redis();
