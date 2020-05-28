@@ -19,7 +19,7 @@
 //
 //echo $token;
 namespace Service;
-
+define('DIR',dirname(__FILE__));
 
 class ServiceObj
 {
