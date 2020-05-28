@@ -56,10 +56,10 @@ class ServiceObj
             //设置参数
             $this->ws->set([
                 'daemonize'                => 0,//是否开启守护进程 0 不开启 1 开启
-                'heartbeat_check_interval' => 10, //每秒检测是否有人掉线
-                'heartbeat_idle_time'      => 60, //60秒内无应答就关闭连接
-                'log_level'                => SWOOLE_LOG_ERROR | SWOOLE_LOG_WARNING | SWOOLE_LOG_NOTICE,//swoole 的日志级别
-                'log_file'                 => DIR.'/log/swoole'.'.log',  //SWOOLE运行日志
+//                'heartbeat_check_interval' => 10, //每秒检测是否有人掉线
+//                'heartbeat_idle_time'      => 60, //60秒内无应答就关闭连接
+//                'log_level'                => SWOOLE_LOG_ERROR | SWOOLE_LOG_WARNING | SWOOLE_LOG_NOTICE,//swoole 的日志级别
+//                'log_file'                 => DIR.'/log/swoole'.'.log',  //SWOOLE运行日志
             ]);
             $this->ws->on('open', [$this,'onOpen']);
             $this->ws->on('message', [$this,'onMessage']);
