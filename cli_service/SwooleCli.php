@@ -8,8 +8,9 @@
 
 namespace Im\ImService;
 
-require_once ('HelpCommon.php');
-use Im\Common\HelpCommon;
+use Common\Helper\HelpCommon;
+
+require_once('common/helper/HelpCommon.php');
 
 /**
  * 业务进程处理 （扫码登录 逻辑 定时任务待定）

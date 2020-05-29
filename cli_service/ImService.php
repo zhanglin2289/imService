@@ -6,9 +6,10 @@
 		 */
 namespace Im\ImService;
 
-require_once ('Common.php');
+use Common\Helper\Common;
 
-use Im\Common\Common;
+require_once('common/helper/Common.php');
+
 
 class ImService extends Common
 {

@@ -5,7 +5,7 @@
  * Time : 2020/4/22 --- 22:30
  */
 
-namespace Im\Common;
+namespace Common\Helper;
 
 define('DEBUG',false);
 define('DIR',dirname(__FILE__));
@@ -22,7 +22,7 @@ class Common
     public function __construct()
     {
         date_default_timezone_set('PRC');//设置时区
-        $this->path = DIR. DS .'log'. DS .date('Y-m-d').DS;
+        $this->path = DIR. DS .'tmp'. DS . 'log' . DS .date('Y-m-d').DS;
     }
     
     

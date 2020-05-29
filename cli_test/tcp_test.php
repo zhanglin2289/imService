@@ -9,7 +9,7 @@ namespace Im\Service;
 
 use Im\Common\Common;
 
-require_once ('Common.php');
+require_once('Common.php');
 
 class TcpTest extends Common
 {

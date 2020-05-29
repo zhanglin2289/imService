@@ -6,13 +6,13 @@
  * Time : 14:51
  */
 
-namespace Im\Common;
+namespace Common\Helper;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 
-require_once ('vendor/autoload.php');
-require_once ('Common.php');
+require_once('vendor/autoload.php');
+require_once('Common.php');
 
 class HelpCommon extends Common
 {
@@ -21,7 +21,7 @@ class HelpCommon extends Common
     public function __construct()
     {
         parent::__construct();
-        $this->dirname = __DIR__.DIRECTORY_SEPARATOR.'QrCode'.DIRECTORY_SEPARATOR.date('Y-m-d',time()).DIRECTORY_SEPARATOR;
+        $this->dirname = DIR . DS . 'tmp' .DS . 'QrCode' . DS . date('Y-m-d',time()) . DS;
         $this->checkFile($this->dirname);
     }
     
@@ -115,3 +115,5 @@ class HelpCommon extends Common
     }
     
 }
+$data = (new HelpCommon())->generateQrCode(111,time());
+echo $data;
