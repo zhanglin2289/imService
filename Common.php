@@ -90,14 +90,21 @@ class Common
      */
     protected function json($code=200,$msg='Success',$data=[],array $other=[])
     {
+        if(!is_string($msg)){
+            $this->write('处理提示文字错误','error');
+        }
         $return_arr = [
             'status'=>$code,
             'msg'=>$msg,
             'data'=>$data,
         ];
-        //$this->writeLog($msg,'error');
-        if(DEBUG===false && $code!==200){
-            $return_arr['msg'] = 'WebSocket 接收数据异常!';
+        if($code!==200){
+            if(DEBUG){//开启 调试模式 将返回正常错误信息
+                $return_arr['msg'] = $msg;
+            }else{//关闭 调试模式 返回统一提示信息
+                $return_arr['msg'] = 'WebSocket 接收数据异常!';
+            }
+            $this->write($msg,'error');
         }
         if(!empty($other)){//根据需求追加数据
             foreach ($other as $k=>$v){
@@ -115,7 +122,7 @@ class Common
      */
     protected function write(string $message,string $level)
     {
-        if(DEBUG===true){//开启debug 将日志输出到 控制台
+        if(DEBUG){//开启debug 将日志输出到 控制台
             echo $message.PHP_EOL;
         }else{
             $this->message = $message;
