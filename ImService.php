@@ -56,20 +56,18 @@ class ImService extends Common
 		 */
 		public function onOpen($server,$request)
 		{
-		    echo '客户端连接成功';
-		    
-//		    $this->head($request);
-//        $client_token = $request->get['token'];//接收到客户端的token
-//        $user_id = $this->checkToken($client_token);
-//        if(empty($user_id)){
-//            $this->ws->push($request->fd, $this->json(401,'无效授权'));
-//        }else{
-//            if(!$this->hashHas('relat_user',$user_id)){//连接的用户不存在 绑定信息
-//                $this->redis->hSet('relat_user',$user_id,$request->fd);//追加到redis 的hash 表中
-//                $this->redis->hSet('relat_fd',$request->fd,$user_id);//追加到redis 的hash 表中
-//            }
-//            $this->ws->push($request->fd, $this->json(201,'WebSocket 连接成功'));
-//        }
+		    $this->head($request);
+        $client_token = $request->get['token'];//接收到客户端的token
+        $user_id = $this->checkToken($client_token);
+        if(empty($user_id)){
+            $this->ws->push($request->fd, $this->json(401,'无效授权'));
+        }else{
+            if(!$this->hashHas('relat_user',$user_id)){//连接的用户不存在 绑定信息
+                $this->redis->hSet('relat_user',$user_id,$request->fd);//追加到redis 的hash 表中
+                $this->redis->hSet('relat_fd',$request->fd,$user_id);//追加到redis 的hash 表中
+            }
+            $this->ws->push($request->fd, $this->json(201,'WebSocket 连接成功'));
+        }
 		}
 
 		/**
