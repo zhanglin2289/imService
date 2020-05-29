@@ -42,7 +42,7 @@ class Common
             return false;
         }
         $jsonObject = json_decode($json,false);//强制转换为json 对象
-        if(empty($jsonObject) && !is_object($jsonObject)){//检测必须有值 且为 json对象
+        if(empty($jsonObject) || !is_object($jsonObject)){//检测必须有值 且为 json对象
             $this->error_json = $this->json(404,'json 格式错误,无法解析!');
             return false;
         }
