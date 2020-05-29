@@ -139,7 +139,7 @@ class Common
     {
         $request_info = 'Message';
         if(!empty($request)){
-            $request_info = $request->server['remote_addr']." ".$request->header['request_method']." ".$request->header['origin'];
+            $request_info = $request->server['remote_addr']." ".$request->server['request_method']." ".$request->header['origin'];
         }
         $this->head = $this->dividing_line."[".date('Y-m-d H:i:s')."]  ".$request_info.PHP_EOL;
     }
